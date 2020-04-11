@@ -10,7 +10,7 @@ public abstract class Player {
 	protected Card card2;
 	protected boolean ip;
 	protected boolean newHand;
-	protected int immediateReward;
+	protected double immediateReward;
 	protected int numChipsGained;
 	
 	protected Card[] board;
@@ -88,16 +88,20 @@ public abstract class Player {
 			if (fold) { // someone folded
 				if (finalPot == 0) { // this player folded
 //					reward = -1*(pot/(1+this.actionJustCommitted))/2;
-					reward = -1*(pot-amountToCall)/2;
+//					reward = -1*(pot-amountToCall)/2;
+					reward = 0;
 				} else { // this player got their opponent to fold
 //					reward = (finalPot+immediateReward)/2;
-					reward = (pot-amountToCall)/2;
+//					reward = (pot-amountToCall)/2;
+					reward = pot-amountToCall;
 				}
 			} else { // hand went to showdown
 				if (finalPot == 0) { // this player lost at showdown
-					reward = -1*(pot)/2;
+//					reward = -1*(pot)/2;
+					reward = 0;
 				} else {
-					reward = finalPot/2;
+//					reward = finalPot/2;
+					reward = finalPot;
 				}
 			}
 			this.endHandWeightsUpdate(reward);

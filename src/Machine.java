@@ -20,10 +20,12 @@ public class Machine extends Player {
 	private double[] movesToOpen = {0,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
+	private double betPenaltyParameter;
 	
-	public Machine(String name, int chips, double epsilon, String function, boolean train) {
+	public Machine(String name, int chips, double epsilon, String function, boolean train, double betPenaltyParameter) {
 		super(name, chips);
 		this.epsilon = epsilon;
+		this.betPenaltyParameter = betPenaltyParameter;
 		if (function.equals("lfa")) {
 			this.fun = new LFA(epsilon, 0.96, 0.000005, train);
 		} else {
@@ -159,11 +161,11 @@ public class Machine extends Player {
 			immediateReward = 0;
 			bet = -1;
 		} else {
-			immediateReward = -1*bet;
+			immediateReward = -1*bet/this.betPenaltyParameter;
 			placeBet(bet);
 		}
 		if (!newHand) {
-			fun.beginBackPropagation(ip);
+			fun.beginBackPropagation(immediateReward,ip);
 		} else {
 			newHand = false;
 		}
@@ -184,7 +186,8 @@ public class Machine extends Player {
 			return Integer.MIN_VALUE;
 		}
 		if (action == -1) {
-			return -1*(pot-amountToCall)/2;
+//			return -1*(pot-amountToCall)/2;
+		    return 0;
 		}
 //		if ((pot/(1+this.actionJustCommitted))*this.actionJustCommitted + (pot + (pot/(1+this.actionJustCommitted))*this.actionJustCommitted)*action > this.effective) {
 		if (this.getStreet() == 0) {
@@ -218,7 +221,7 @@ public class Machine extends Player {
 //		System.out.println(reward);
 //		System.out.println(currentSAP);
 	    if (this.getStreet() > 0) {
-	      fun.beginBackPropagation(reward, ip);
+	      fun.beginTerminalBackPropagation(reward, ip);
 	    }
 	}
 	
@@ -808,7 +811,7 @@ public class Machine extends Player {
 	public static void main(String args[]) {
 		
 		Person Hero = new Person("Hero", 200);
-		Machine Villian = new Machine("Villian", 200, 0, "lfa", false); // epsilon = 0 so it makes greedy decisions
+		Machine Villian = new Machine("Villian", 200, 0, "lfa", false, 3); // epsilon = 0 so it makes greedy decisions
 		Game game = new Game(Hero, Villian, false); // pvp is false
 		
 		while (Villian.getChips() > 0 && Hero.getChips() > 0) {

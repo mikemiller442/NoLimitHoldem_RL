@@ -58,11 +58,11 @@ public class LFA implements Function {
 		return this.currentFeatures;
 	}
 	
-	public void beginBackPropagation(boolean ip) {
-		backPropagation(previousFeatures, gamma*currentSAP, previousSAP, ip);
+	public void beginBackPropagation(double immediateReward, boolean ip) {
+		backPropagation(previousFeatures, immediateReward + gamma*currentSAP, previousSAP, ip);
 	}
 	
-	public void beginBackPropagation(double reward, boolean ip) {
+	public void beginTerminalBackPropagation(double reward, boolean ip) {
 		backPropagation(currentFeatures, reward, currentSAP, ip);
 	}
 	

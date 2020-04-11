@@ -2,8 +2,8 @@ package reinforcementLearning;
 
 public interface Function {
 
-	public void beginBackPropagation(boolean ip);
-	public void beginBackPropagation(double reward, boolean ip);
+    public void beginBackPropagation(double immediateReward, boolean ip);
+	public void beginTerminalBackPropagation(double reward, boolean ip);
 	public void backPropagation(double[] inputs, double target, double output, boolean ip);
 	public double functionOutput(double[] features, boolean ip);
 	public void setCurrentSAP(double SAP);

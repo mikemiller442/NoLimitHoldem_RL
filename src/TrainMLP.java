@@ -5,8 +5,8 @@ public class TrainMLP {
 
     public static void main(String[] args) {
         
-        Machine Hero = new Machine("Hero", 200, .75, "mlp", true);
-        Machine Villian = new Machine("Villian", 200, .75, "mlp", true);
+        Machine Hero = new Machine("Hero", 200, .75, "mlp", true, 3);
+        Machine Villian = new Machine("Villian", 200, .75, "mlp", true, 3);
         Game game = new Game(Hero, Villian, true);
         
         int turn = 0;
