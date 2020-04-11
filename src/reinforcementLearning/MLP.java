@@ -187,8 +187,8 @@ public class MLP implements Function {
 //	    System.out.println(hiddenNodes[1].length);
 //	    System.out.println(features.length);
 		for (int i = 0; i < features.length; i++) {
-		    System.out.println("printing features");
-		    System.out.println(features[i]);
+//		    System.out.println("printing features");
+//		    System.out.println(features[i]);
 		    if (Double.isNaN(hiddenNodes[layer][i])) {
               System.out.println("NaN in the features!!");
               System.out.println(features[i]);

@@ -811,7 +811,7 @@ public class Machine extends Player {
 	public static void main(String args[]) {
 		
 		Person Hero = new Person("Hero", 200);
-		Machine Villian = new Machine("Villian", 200, 0, "lfa", false, 3); // epsilon = 0 so it makes greedy decisions
+		Machine Villian = new Machine("Villian", 200, 0, "lfa", false, 2); // epsilon = 0 so it makes greedy decisions
 		Game game = new Game(Hero, Villian, false); // pvp is false
 		
 		while (Villian.getChips() > 0 && Hero.getChips() > 0) {
