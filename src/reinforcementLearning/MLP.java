@@ -355,7 +355,7 @@ public class MLP implements Function {
 			BufferedReader br = null;
 			FileReader fr = null;
 			try {
-				fr = new FileReader("mlpWeights.txt");
+				fr = new FileReader("mlpWeightsBPP2.txt");
 				br = new BufferedReader(fr);
 				while (true) {
 				    if (counter > NUM_WEIGHT_MATRICES*7) {
