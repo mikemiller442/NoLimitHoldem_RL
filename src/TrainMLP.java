@@ -23,6 +23,8 @@ public class TrainMLP {
             if (turn % 20000 == 0) {
                 Hero.decreaseEpsilon(2);
                 Villian.decreaseEpsilon(2);
+                Hero.decreaseBPP();
+                Villian.decreaseBPP();
             }
             turn++;
         }

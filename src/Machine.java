@@ -20,12 +20,13 @@ public class Machine extends Player {
 	private double[] movesToOpen = {0,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
-	
-	private static final int betPenaltyParameter = 2;
+	private double betPenaltyParameter;
+	private final static double initialBPP = 5;
 	
 	public Machine(String name, int chips, double epsilon, String function, boolean train) {
 		super(name, chips);
 		this.epsilon = epsilon;
+		this.betPenaltyParameter = initialBPP;
 		if (function.equals("lfa")) {
 			this.fun = new LFA(epsilon, 0.96, 0.000005, train);
 		} else {
@@ -42,6 +43,10 @@ public class Machine extends Player {
 	public void decreaseEpsilon(double factor) {
 		this.epsilon = this.epsilon/factor;
 	}
+	
+	public void decreaseBPP() {
+      this.betPenaltyParameter = this.betPenaltyParameter - initialBPP/10;
+    }
 	
 	public void storeWeights() {
 		fun.storeWeights();
@@ -141,10 +146,10 @@ public class Machine extends Player {
 //		}
 		double currentSAP = calculateSAP(moves[maxIndex]);
 		fun.setCurrentSAP(currentSAP);
-		System.out.println("testing move selection in Machine");
-		System.out.println(maxIndex);
-		System.out.println(bet);
-		System.out.println(currentSAP);
+//		System.out.println("testing move selection in Machine");
+//		System.out.println(maxIndex);
+//		System.out.println(bet);
+//		System.out.println(currentSAP);
 		if (Double.isNaN(currentSAP)) {
 		  System.out.println("NaN SAP");
 		  System.exit(0);
@@ -161,7 +166,7 @@ public class Machine extends Player {
 			immediateReward = 0;
 			bet = -1;
 		} else {
-			immediateReward = -1*bet/betPenaltyParameter;
+			immediateReward = -1*bet/this.betPenaltyParameter;
 			placeBet(bet);
 		}
 		if (!newHand) {
