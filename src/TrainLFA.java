@@ -5,13 +5,13 @@ public class TrainLFA {
 
 	public static void main(String[] args) {
 		
-		Machine Hero = new Machine("Hero", 200, .75, "lfa", true, 3);
-		Machine Villian = new Machine("Villian", 200, .75, "lfa", true, 3);
+		Machine Hero = new Machine("Hero", 200, 0.9, "lfa", true);
+		Machine Villian = new Machine("Villian", 200, 0.9, "lfa", true);
 		Game game = new Game(Hero, Villian, true);
 		
-		int turn = 0;
+		int turn = 1;
 		
-		while (turn < 10000) {
+		while (turn < 200000) {
 			game.Hand();
 			game.switchBlinds();
 			System.out.println("num chips gained");
@@ -20,9 +20,11 @@ public class TrainLFA {
 			if (Hero.numChipsGained + Villian.numChipsGained != 0) {
 				break;
 			}
-			if (turn % 10000 == 0) {
-				Hero.decreaseEpsilon(2);
-				Villian.decreaseEpsilon(2);
+			if (turn % 20000 == 0) {
+				Hero.decreaseEpsilon(1.5);
+				Villian.decreaseEpsilon(1.5);
+				Hero.decreaseBPP();
+                Villian.decreaseBPP();
 			}
 			turn++;
 		}

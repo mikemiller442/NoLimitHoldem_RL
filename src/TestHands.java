@@ -45,7 +45,7 @@ public class TestHands {
 				hc[1] = new Card(numbers[11], numbers[13]);
 				
 				Hero.setHand(hc);
-				hand_result = Hero.bestHand(7);
+				hand_result = Hero.bestHand(7, true);
 				handToString = printHands(hand_result);
 				System.out.println(handToString);
 			}

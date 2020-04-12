@@ -21,14 +21,18 @@ public class Machine extends Player {
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
 	private double betPenaltyParameter;
-	private final static double initialBPP = 10;
+	private final static double initialBPP = 1.5;
 	
 	public Machine(String name, int chips, double epsilon, String function, boolean train) {
 		super(name, chips);
 		this.epsilon = epsilon;
-		this.betPenaltyParameter = initialBPP;
+		if (train) {
+		  this.betPenaltyParameter = initialBPP;
+		} else {
+		  this.betPenaltyParameter = 1;
+		}
 		if (function.equals("lfa")) {
-			this.fun = new LFA(epsilon, 0.96, 0.000005, train);
+			this.fun = new LFA(epsilon, 0.96, 0.000001, train);
 		} else {
 			this.fun = new MLP(epsilon, 0.96, train);
 		}
@@ -45,7 +49,7 @@ public class Machine extends Player {
 	}
 	
 	public void decreaseBPP() {
-      this.betPenaltyParameter = this.betPenaltyParameter - initialBPP/10;
+      this.betPenaltyParameter = this.betPenaltyParameter - 0.33*(this.betPenaltyParameter - 1);
     }
 	
 	public void storeWeights() {
@@ -154,7 +158,8 @@ public class Machine extends Player {
 		  System.out.println("NaN SAP");
 		  System.exit(0);
 		}
-		if (currentSAP < -400 || currentSAP > 400) {
+		if (currentSAP < -1000 || currentSAP > 1000) {
+		    System.out.println("SAP value beyond reasonable limits during training");
 			System.out.println(randDouble);
 			System.out.println(maxIndex);
 			System.out.println(moves[maxIndex]);
@@ -178,6 +183,7 @@ public class Machine extends Player {
 		double[] previousFeatures = fun.getCurrentFeatures().clone();
 //		for (int i = 0; i < previousFeatures.length; i++) previousFeatures[i] = currentFeatures[i];
 		fun.setPreviousFeatures(previousFeatures);
+		System.out.println(immediateReward);
 		System.out.println("Machine bets " + Integer.toString(bet));
 		return bet;
 	}
@@ -209,6 +215,8 @@ public class Machine extends Player {
 		value = fun.functionOutput(features, ip);
 		if (Double.isNaN(value)) {
 		  System.out.println("debugging calculateSAP");
+		  System.out.println(betPenaltyParameter);
+		  System.out.println(epsilon);
 		  System.out.println(this.getStreet());
 		  System.out.println(pot);
 		  System.out.println(amountToCall);

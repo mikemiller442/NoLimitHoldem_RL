@@ -9,7 +9,7 @@ public class TrainMLP {
         Machine Villian = new Machine("Villian", 200, 0.9, "mlp", true);
         Game game = new Game(Hero, Villian, true);
         
-        int turn = 0;
+        int turn = 1; // start at one so BPP doesn't go to zero
         
         while (turn < 200000) {
             game.Hand();

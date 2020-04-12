@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 
 public class LFA implements Function {
 
-	private int[] featureVectorLengths = {8,83,108,109};
+	private int[] featureVectorLengths = {8,90,115,116};
 	
 	private double[] weightsPreIP;
 	private double[] weightsPreOP;
@@ -112,6 +112,14 @@ public class LFA implements Function {
 			throw new IllegalArgumentException("the feature vector length is incorrect");
 		}
 		currentFeatures = features;
+		if (value < -2000 || value > 2000) {
+		  System.out.println("function output exceeded reasonable limits during training");
+		  for (int i = 0; i < features.length; i++) System.out.println(features[i]);
+		  System.out.println("printing weights");
+		  for (int i = 0; i < features.length; i++) System.out.println(weightsPreOP[i]);
+		  System.out.println(value);
+		  System.out.println(features.length);
+		}
 		return value;
 	}
 	
