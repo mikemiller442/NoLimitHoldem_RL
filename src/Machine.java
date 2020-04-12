@@ -15,17 +15,17 @@ import java.util.Random;
 public class Machine extends Player {
 	
 	private Function fun;
-	private int[] featureVectorLengths = {8,83,108,109};
+	private int[] featureVectorLengths = {8,90,115,116};
 	private double[] moves = {0,0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToOpen = {0,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
-	private double betPenaltyParameter;
 	
-	public Machine(String name, int chips, double epsilon, String function, boolean train, double betPenaltyParameter) {
+	private static final int betPenaltyParameter = 2;
+	
+	public Machine(String name, int chips, double epsilon, String function, boolean train) {
 		super(name, chips);
 		this.epsilon = epsilon;
-		this.betPenaltyParameter = betPenaltyParameter;
 		if (function.equals("lfa")) {
 			this.fun = new LFA(epsilon, 0.96, 0.000005, train);
 		} else {
@@ -161,7 +161,7 @@ public class Machine extends Player {
 			immediateReward = 0;
 			bet = -1;
 		} else {
-			immediateReward = -1*bet/this.betPenaltyParameter;
+			immediateReward = -1*bet/betPenaltyParameter;
 			placeBet(bet);
 		}
 		if (!newHand) {
@@ -261,12 +261,18 @@ public class Machine extends Player {
 		int suitedCards = suitedCards(3);
 		int numOverCards = overCards(3);
 		int openEnders = straightDraws(3);
-		int[] hand = bestHand(5);
+		int[] hand = bestHand(5, true);
 		int[] possibleHands = new int[8]; // from pair to quads, excluding high card and straight flush
 		for (int i = 0; i < possibleHands.length; i++) possibleHands[i] = 0;
 		if (hand[0] > 0) {
-			possibleHands[hand[0] - 1] = 1; // you had the hand indicated by the bestHand method
-		}
+          possibleHands[hand[0] - 1] = 1; // you had the hand indicated by the bestHand method
+        }
+		int[] texture = bestHand(3, false);
+		int[] possibleTextures = new int[8];
+		for (int i = 0; i < possibleTextures.length; i++) possibleTextures[i] = 0;
+		if (texture[0] > 0) {
+		  possibleTextures[texture[0] - 1] = 1;
+        }
 		double actionFolds = 0;
 		double actionCompletes = 0;
 		double actionChecks = 0;
@@ -375,6 +381,14 @@ public class Machine extends Player {
 		features[81] = possibleHands[5]*actionChecks;
 		features[82] = possibleHands[6]*actionChecks;
 		
+		features[83] = possibleTextures[0];
+        features[84] = possibleTextures[1];
+        features[85] = possibleTextures[2];
+        features[86] = possibleTextures[3];
+        features[87] = possibleTextures[4];
+        features[88] = possibleTextures[5];
+        features[89] = possibleTextures[6];
+		
 		return features;
 	}
 	
@@ -384,13 +398,19 @@ public class Machine extends Player {
 		int suitedCards = suitedCards(3);
 		int numOverCards = overCards(3);
 		int openEnders = straightDraws(3);
-		int[] hand = bestHand(6);
+		int[] hand = bestHand(6, true);
 		int[] possibleHands = new int[8]; // from pair to quads, excluding high card and straight flush
 		for (int i = 0; i < possibleHands.length; i++) possibleHands[i] = 0;
 		if (hand[0] > 0) {
 			possibleHands[hand[0] - 1] = 1; // you had the hand indicated by the bestHand method
 		}
-		
+		int[] texture = bestHand(3, false);
+        int[] possibleTextures = new int[8];
+        for (int i = 0; i < possibleTextures.length; i++) possibleTextures[i] = 0;
+        if (texture[0] > 0) {
+          possibleTextures[texture[0] - 1] = 1;
+        }
+        
 		double actionFolds = 0;
 		double actionCompletes = 0;
 		double actionChecks = 0;
@@ -525,19 +545,33 @@ public class Machine extends Player {
 		features[106] = possibleHands[5]*actionChecks;
 		features[107] = possibleHands[6]*actionChecks;
 		
+		features[108] = possibleTextures[0];
+        features[109] = possibleTextures[1];
+        features[110] = possibleTextures[2];
+        features[111] = possibleTextures[3];
+        features[112] = possibleTextures[4];
+        features[113] = possibleTextures[5];
+        features[114] = possibleTextures[6];
+		
 		return features;
 	}
 	
 	public double[] getFeaturesRiver(double action) {
 		double[] features = new double[featureVectorLengths[3]];
 		double handStrength = this.calculateHandStrength();
-		int[] hand = bestHand(7);
+		int[] hand = bestHand(7, true);
 		int[] possibleHands = new int[8]; // from pair to quads, excluding high card and straight flush
 		for (int i = 0; i < possibleHands.length; i++) possibleHands[i] = 0;
 		if (hand[0] > 0) {
 			possibleHands[hand[0] - 1] = 1; // you had the hand indicated by the bestHand method
 		}
-		
+		int[] texture = bestHand(3, false);
+        int[] possibleTextures = new int[8];
+        for (int i = 0; i < possibleTextures.length; i++) possibleTextures[i] = 0;
+        if (texture[0] > 0) {
+          possibleTextures[texture[0] - 1] = 1;
+        }
+        
 		double actionFolds = 0;
 		double actionCompletes = 0;
 		double actionChecks = 0;
@@ -673,6 +707,14 @@ public class Machine extends Player {
 		features[106] = possibleHands[4]*actionChecks;
 		features[107] = possibleHands[5]*actionChecks;
 		features[108] = possibleHands[6]*actionChecks;
+		
+		features[109] = possibleTextures[0];
+        features[110] = possibleTextures[1];
+        features[111] = possibleTextures[2];
+        features[112] = possibleTextures[3];
+        features[113] = possibleTextures[4];
+        features[114] = possibleTextures[5];
+        features[115] = possibleTextures[6];
 		
 //		features[78] = sb_sizings[0]*actionJustCommitted;
 //		features[79] = sb_sizings[1]*actionJustCommitted;
@@ -811,7 +853,7 @@ public class Machine extends Player {
 	public static void main(String args[]) {
 		
 		Person Hero = new Person("Hero", 200);
-		Machine Villian = new Machine("Villian", 200, 0, "lfa", false, 1); // epsilon = 0 so it makes greedy decisions
+		Machine Villian = new Machine("Villian", 200, 0, "lfa", false); // epsilon = 0 so it makes greedy decisions
 		Game game = new Game(Hero, Villian, false); // pvp is false
 		
 		while (Villian.getChips() > 0 && Hero.getChips() > 0) {

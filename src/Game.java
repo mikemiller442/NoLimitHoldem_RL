@@ -219,12 +219,12 @@ public class Game {
 		
 		System.out.println();
 		System.out.print("SB's hand: ");
-		sb_result = smallBlind.bestHand(7);
+		sb_result = smallBlind.bestHand(7, true);
 		handToString = printHands(sb_result);
 		System.out.println(handToString);
 		
 		System.out.print("BB's hand: ");
-		bb_result = bigBlind.bestHand(7);
+		bb_result = bigBlind.bestHand(7, true);
 		handToString = printHands(bb_result);
 		System.out.println(handToString);
 		

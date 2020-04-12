@@ -218,7 +218,7 @@ public abstract class Player {
 		}
 	}
 	
-	public int[] bestHand(int numCards) {
+	public int[] bestHand(int numCards, boolean includeHoleCards) {
 		Card[] cardArray = new Card[numCards];
 		Card[] aceLowCardArray = new Card[numCards];
 		for (int i = 0; i < numCards-2; i++) {
@@ -229,6 +229,23 @@ public abstract class Player {
 				aceLowCardArray[i] = board[i];
 			}
 		}
+		
+		if (includeHoleCards) {
+		    cardArray[numCards - 2] = this.card1;
+  	        cardArray[numCards - 1] = this.card2;
+  	        
+  	        if (this.card1.getValue() == 12) {
+  	            aceLowCardArray[numCards - 2] = new Card(-1, this.card1.getSuit());
+  	        } else {
+  	            aceLowCardArray[numCards - 2] = this.card1;
+  	        }
+  	        if (this.card2.getValue() == 12) {
+  	            aceLowCardArray[numCards - 1] = new Card(-1, this.card1.getSuit());
+  	        } else {
+  	            aceLowCardArray[numCards - 1] = this.card2;
+  	        }
+		}
+		
 		cardArray[numCards - 2] = this.card1;
 		cardArray[numCards - 1] = this.card2;
 		
