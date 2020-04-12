@@ -395,8 +395,8 @@ public class Game {
 //			System.out.println(pot);
 			System.exit(0);
 		}
-		System.out.println("testing who folded");
-		System.out.println(playerFolded);
+//		System.out.println("testing who folded");
+//		System.out.println(playerFolded);
 		if (playerFolded == 1) {
 			smallBlind.winsPot(0, true, finalPotWithoutLastBet);
 			bigBlind.winsPot(pot, true, finalPotWithoutLastBet);
