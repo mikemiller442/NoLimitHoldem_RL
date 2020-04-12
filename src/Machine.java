@@ -30,7 +30,7 @@ public class Machine extends Player {
 		if (train) {
 		  if (function.equals("lfa")) {
 		    this.betPenaltyParameter = LFA_Initial_BPP;
-		  } else if (function.equals("lfa")) {
+		  } else if (function.equals("mlp")) {
 		    this.betPenaltyParameter = MLP_InitialBPP;
 		  } else {
 		    throw new IllegalArgumentException();
