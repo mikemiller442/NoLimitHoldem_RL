@@ -11,7 +11,7 @@ public class TrainMLP {
         
         int turn = 0;
         
-        while (turn < 100000) {
+        while (turn < 200000) {
             game.Hand();
             game.switchBlinds();
             System.out.println("num chips gained");
@@ -20,7 +20,7 @@ public class TrainMLP {
             if (Hero.numChipsGained + Villian.numChipsGained != 0) {
                 break;
             }
-            if (turn % 10000 == 0) {
+            if (turn % 20000 == 0) {
                 Hero.decreaseEpsilon(2);
                 Villian.decreaseEpsilon(2);
             }
