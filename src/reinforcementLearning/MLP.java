@@ -162,12 +162,11 @@ public class MLP implements Function {
 		} else {
 			throw new IllegalArgumentException("the feature vector length is incorrect");
 		}
-		
-		double[] features = weights[0].compose(inputs);
 //		System.out.println("testing weight dimensions");
-//		System.out.println(weights.length);
-//		System.out.println(weights[0].getNumColumns());
+//        System.out.println(weights.length);
+//        System.out.println(weights[0].getNumColumns());
 //        System.out.println(weights[0].getNumRows());
+		double[] features = weights[0].compose(inputs);
 		for (int i = 1; i < weights.length; i++) {
 			activation(hiddenNodes, features, i);
 //			System.out.println("testing matrix multiplication");
@@ -355,7 +354,7 @@ public class MLP implements Function {
 			BufferedReader br = null;
 			FileReader fr = null;
 			try {
-				fr = new FileReader("mlpWeightsBPP2.txt");
+				fr = new FileReader("mlpWeights.txt");
 				br = new BufferedReader(fr);
 				while (true) {
 				    if (counter > NUM_WEIGHT_MATRICES*7) {
@@ -368,51 +367,51 @@ public class MLP implements Function {
 					
 					case 0:
 						for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-						  weightsPreIP[i] = constructMatrix(matrixStrings[i], numNodesPreIP[i], numNodesPreIP[i+1]);
+						  weightsPreIP[i] = constructMatrix(matrixStrings[i], numNodesPreIP[i+1], numNodesPreIP[i]);
 						}
-						weightsPreIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesPreIP[NUM_WEIGHT_MATRICES-1], 1);
+						weightsPreIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesPreIP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*1):
 					    for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                          weightsPreOP[i] = constructMatrix(matrixStrings[i], numNodesPreOP[i], numNodesPreOP[i+1]);
+                          weightsPreOP[i] = constructMatrix(matrixStrings[i], numNodesPreOP[i+1], numNodesPreOP[i]);
                          }
-                         weightsPreOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesPreOP[NUM_WEIGHT_MATRICES-1], 1);
+                         weightsPreOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesPreOP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*2):
 					    for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                          weightsFlopIP[i] = constructMatrix(matrixStrings[i], numNodesFlopIP[i], numNodesFlopIP[i+1]);
+                          weightsFlopIP[i] = constructMatrix(matrixStrings[i], numNodesFlopIP[i+1], numNodesFlopIP[i]);
                          }
-                         weightsFlopIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesFlopIP[NUM_WEIGHT_MATRICES-1], 1);
+                         weightsFlopIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesFlopIP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*3):
 					  for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                        weightsFlopOP[i] = constructMatrix(matrixStrings[i], numNodesFlopOP[i], numNodesFlopOP[i+1]);
+                        weightsFlopOP[i] = constructMatrix(matrixStrings[i], numNodesFlopOP[i+1], numNodesFlopOP[i]);
                        }
-                       weightsFlopOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesFlopOP[NUM_WEIGHT_MATRICES-1], 1);
+                       weightsFlopOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesFlopOP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*4):
 					  for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                        weightsTurnIP[i] = constructMatrix(matrixStrings[i], numNodesTurnIP[i], numNodesTurnIP[i+1]);
+                        weightsTurnIP[i] = constructMatrix(matrixStrings[i], numNodesTurnIP[i+1], numNodesTurnIP[i]);
                        }
-                       weightsTurnIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesTurnIP[NUM_WEIGHT_MATRICES-1], 1);
+                       weightsTurnIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesTurnIP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*5):
 					  for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                        weightsTurnOP[i] = constructMatrix(matrixStrings[i], numNodesTurnOP[i], numNodesTurnOP[i+1]);
+                        weightsTurnOP[i] = constructMatrix(matrixStrings[i], numNodesTurnOP[i+1], numNodesTurnOP[i]);
                        }
-                       weightsTurnOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesTurnOP[NUM_WEIGHT_MATRICES-1], 1);
+                       weightsTurnOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesTurnOP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*6):
 					  for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                        weightsRiverIP[i] = constructMatrix(matrixStrings[i], numNodesRiverIP[i], numNodesRiverIP[i+1]);
+                        weightsRiverIP[i] = constructMatrix(matrixStrings[i], numNodesRiverIP[i+1], numNodesRiverIP[i]);
                        }
-                       weightsRiverIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesRiverIP[NUM_WEIGHT_MATRICES-1], 1);
+                       weightsRiverIP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesRiverIP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					case (NUM_WEIGHT_MATRICES*7):
 					  for (int i = 0; i < NUM_WEIGHT_MATRICES-1; i++) {
-                        weightsRiverOP[i] = constructMatrix(matrixStrings[i], numNodesRiverOP[i], numNodesRiverOP[i+1]);
+                        weightsRiverOP[i] = constructMatrix(matrixStrings[i], numNodesRiverOP[i+1], numNodesRiverOP[i]);
                        }
-                       weightsRiverOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], numNodesRiverOP[NUM_WEIGHT_MATRICES-1], 1);
+                       weightsRiverOP[NUM_WEIGHT_MATRICES-1] = constructMatrix(matrixStrings[NUM_WEIGHT_MATRICES-1], 1, numNodesRiverOP[NUM_WEIGHT_MATRICES-1]);
 						break;
 					}
 					
