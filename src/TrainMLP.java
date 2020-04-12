@@ -5,8 +5,8 @@ public class TrainMLP {
 
     public static void main(String[] args) {
         
-        Machine Hero = new Machine("Hero", 200, .75, "mlp", true);
-        Machine Villian = new Machine("Villian", 200, .75, "mlp", true);
+        Machine Hero = new Machine("Hero", 200, 0.9, "mlp", true);
+        Machine Villian = new Machine("Villian", 200, 0.9, "mlp", true);
         Game game = new Game(Hero, Villian, true);
         
         int turn = 0;
@@ -21,8 +21,8 @@ public class TrainMLP {
                 break;
             }
             if (turn % 20000 == 0) {
-                Hero.decreaseEpsilon(2);
-                Villian.decreaseEpsilon(2);
+                Hero.decreaseEpsilon(1.5);
+                Villian.decreaseEpsilon(1.5);
                 Hero.decreaseBPP();
                 Villian.decreaseBPP();
             }
