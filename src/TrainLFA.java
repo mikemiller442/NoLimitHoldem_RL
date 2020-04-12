@@ -5,8 +5,8 @@ public class TrainLFA {
 
 	public static void main(String[] args) {
 		
-		Machine Hero = new Machine("Hero", 200, 0.9, "lfa", true);
-		Machine Villian = new Machine("Villian", 200, 0.9, "lfa", true);
+		Machine Hero = new Machine("Hero", 200, 0.8, "lfa", true);
+		Machine Villian = new Machine("Villian", 200, 0.8, "lfa", true);
 		Game game = new Game(Hero, Villian, true);
 		
 		int turn = 1;

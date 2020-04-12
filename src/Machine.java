@@ -21,13 +21,20 @@ public class Machine extends Player {
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
 	private double betPenaltyParameter;
-	private final static double initialBPP = 1.5;
+	private final static double MLP_InitialBPP = 10;
+	private final static double LFA_Initial_BPP = 1.5;
 	
 	public Machine(String name, int chips, double epsilon, String function, boolean train) {
 		super(name, chips);
 		this.epsilon = epsilon;
 		if (train) {
-		  this.betPenaltyParameter = initialBPP;
+		  if (function.equals("lfa")) {
+		    this.betPenaltyParameter = LFA_Initial_BPP;
+		  } else if (function.equals("lfa")) {
+		    this.betPenaltyParameter = MLP_InitialBPP;
+		  } else {
+		    throw new IllegalArgumentException();
+		  }
 		} else {
 		  this.betPenaltyParameter = 1;
 		}

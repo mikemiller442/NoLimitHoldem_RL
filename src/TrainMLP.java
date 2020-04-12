@@ -5,8 +5,8 @@ public class TrainMLP {
 
     public static void main(String[] args) {
         
-        Machine Hero = new Machine("Hero", 200, 0.9, "mlp", true);
-        Machine Villian = new Machine("Villian", 200, 0.9, "mlp", true);
+        Machine Hero = new Machine("Hero", 200, 0.8, "mlp", true);
+        Machine Villian = new Machine("Villian", 200, 0.8, "mlp", true);
         Game game = new Game(Hero, Villian, true);
         
         int turn = 1; // start at one so BPP doesn't go to zero
