@@ -21,7 +21,7 @@ public class Machine extends Player {
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double epsilon;
 	private double betPenaltyParameter;
-	private final static double MLP_InitialBPP = 50;
+	private final static double MLP_InitialBPP = 12;
 	private final static double LFA_Initial_BPP = 1.5;
 	
 	public Machine(String name, int chips, double epsilon, String function, boolean train) {
@@ -155,6 +155,13 @@ public class Machine extends Player {
 //		} else {
 //			currentSAP = calculateSAP(movesToComplete[maxIndex]);
 //		}
+		if (bet < 0) {
+            immediateReward = 0;
+            bet = -1;
+        } else {
+            immediateReward = -1*bet/this.betPenaltyParameter;
+            placeBet(bet);
+        }
 		double currentSAP = calculateSAP(moves[maxIndex]);
 		fun.setCurrentSAP(currentSAP);
 //		System.out.println("testing move selection in Machine");
@@ -173,13 +180,6 @@ public class Machine extends Player {
 			System.out.println(fun.getPreviousSAP());
 			System.out.println(currentSAP);
 			System.exit(0);
-		}
-		if (bet < 0) {
-			immediateReward = 0;
-			bet = -1;
-		} else {
-			immediateReward = -1*bet/this.betPenaltyParameter;
-			placeBet(bet);
 		}
 		if (!newHand) {
 			fun.beginBackPropagation(immediateReward,ip);
