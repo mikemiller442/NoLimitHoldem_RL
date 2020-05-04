@@ -12,7 +12,7 @@ public class Matrix {
 		this.entries = entries;
 		this.numRows = entries.length;
 		this.numColumns = entries[0].length;
-		this.alpha = 0.0001;
+		this.alpha = 0.000005;
 
 	}
 

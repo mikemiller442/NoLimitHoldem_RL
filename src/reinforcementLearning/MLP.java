@@ -15,12 +15,12 @@ public class MLP implements Function {
 	
 	private int[] numNodesPreIP = {8,5,3};
 	private int[] numNodesPreOP = {8,5,3};
-	private int[] numNodesFlopIP = {90,30,10};
-	private int[] numNodesFlopOP = {90,30,10};
-	private int[] numNodesTurnIP = {115,30,10};
-	private int[] numNodesTurnOP = {115,30,10};
-	private int[] numNodesRiverIP = {116,30,10};
-	private int[] numNodesRiverOP = {116,30,10};
+	private int[] numNodesFlopIP = {90,40,15};
+	private int[] numNodesFlopOP = {90,40,15};
+	private int[] numNodesTurnIP = {115,40,15};
+	private int[] numNodesTurnOP = {115,40,15};
+	private int[] numNodesRiverIP = {116,40,15};
+	private int[] numNodesRiverOP = {116,40,15};
 	
 	private double[][] NodesPreIP;
 	private double[][] NodesPreOP;
