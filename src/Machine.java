@@ -15,7 +15,7 @@ import java.util.Random;
 public class Machine extends Player {
 	
 	private Function fun;
-	private int[] featureVectorLengths = {8,90,115,116};
+	private int[] featureVectorLengths = {8,106,121,123};
 	private double[] moves = {0,0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToOpen = {0,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
@@ -281,6 +281,7 @@ public class Machine extends Player {
 		int suitedCards = suitedCards(3);
 		int numOverCards = overCards(3);
 		int openEnders = straightDraws(3);
+		int bdsd = this.BackDoorStraightDraw();
 		int[] hand = bestHand(5, true);
 		int[] possibleHands = new int[8]; // from pair to quads, excluding high card and straight flush
 		for (int i = 0; i < possibleHands.length; i++) possibleHands[i] = 0;
@@ -408,6 +409,24 @@ public class Machine extends Player {
         features[87] = possibleTextures[4];
         features[88] = possibleTextures[5];
         features[89] = possibleTextures[6];
+        
+        features[90] = card1.getValue();
+        features[91] = card2.getValue();
+        features[92] = board[0].getValue();
+        features[93] = board[1].getValue();
+        features[94] = board[2].getValue();
+        features[95] = bdsd;
+        features[96] = bdsd*handStrength;
+        features[97] = bdsd*suitedCards;
+        features[98] = bdsd*numOverCards;
+        
+        features[99] = possibleHands[0]*bdsd;
+        features[100] = possibleHands[1]*bdsd;
+        features[101] = possibleHands[2]*bdsd;
+        features[102] = possibleHands[3]*bdsd;
+        features[103] = possibleHands[4]*bdsd;
+        features[104] = possibleHands[5]*bdsd;
+        features[105] = possibleHands[6]*bdsd;
 		
 		return features;
 	}
@@ -572,6 +591,13 @@ public class Machine extends Player {
         features[112] = possibleTextures[4];
         features[113] = possibleTextures[5];
         features[114] = possibleTextures[6];
+        
+        features[115] = card1.getValue();
+        features[116] = card2.getValue();
+        features[117] = board[0].getValue();
+        features[118] = board[1].getValue();
+        features[119] = board[2].getValue();
+        features[120] = board[3].getValue();
 		
 		return features;
 	}
@@ -735,6 +761,14 @@ public class Machine extends Player {
         features[113] = possibleTextures[4];
         features[114] = possibleTextures[5];
         features[115] = possibleTextures[6];
+        
+        features[116] = card1.getValue();
+        features[117] = card2.getValue();
+        features[118] = board[0].getValue();
+        features[119] = board[1].getValue();
+        features[120] = board[2].getValue();
+        features[121] = board[3].getValue();
+        features[122] = board[4].getValue();
 		
 //		features[78] = sb_sizings[0]*actionJustCommitted;
 //		features[79] = sb_sizings[1]*actionJustCommitted;
@@ -869,6 +903,27 @@ public class Machine extends Player {
 		}
 		return openEnder;
 	}
+	
+	private int BackDoorStraightDraw() {
+      Card[] cardArray = new Card[3];
+      int backDoorStraightDraw = 0;
+      if (Math.abs(card1.getValue() - card2.getValue()) == 2) {
+        int gutterBall = Math.max(card1.getValue(), card2.getValue()) - 1;
+          for (int i = 0; i < board.length; i++) {
+            if (board[i].getValue() == gutterBall) {
+              backDoorStraightDraw = 1;
+            }
+          }
+      } else if (Math.abs(card1.getValue() - card2.getValue()) == 1) {
+        int highCard = Math.max(card1.getValue(), card2.getValue());
+        for (int i = 0; i < board.length; i++) {
+          if (board[i].getValue() == highCard+2 || board[i].getValue() == highCard+1 || board[i].getValue() == highCard-2 || board[i].getValue() == highCard-3) {
+            backDoorStraightDraw = 1;
+          }
+        }
+      }
+      return backDoorStraightDraw;
+    }
 	
 	public static void main(String args[]) {
 		

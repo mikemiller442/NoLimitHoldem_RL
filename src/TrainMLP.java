@@ -5,13 +5,13 @@ public class TrainMLP {
 
     public static void main(String[] args) {
         
-        Machine Hero = new Machine("Hero", 200, 0.8, "mlp", true);
-        Machine Villian = new Machine("Villian", 200, 0.8, "mlp", true);
+        Machine Hero = new Machine("Hero", 200, 0.75, "mlp", true);
+        Machine Villian = new Machine("Villian", 200, 0.75, "mlp", true);
         Game game = new Game(Hero, Villian, true);
         
         int turn = 1; // start at one so BPP doesn't go to zero
         
-        while (turn < 800000) {
+        while (turn < 2000000) {
             game.Hand();
             game.switchBlinds();
             System.out.println("num chips gained");
@@ -20,7 +20,7 @@ public class TrainMLP {
             if (Hero.numChipsGained + Villian.numChipsGained != 0) {
                 break;
             }
-            if (turn % 80000 == 0) {
+            if (turn % 200000 == 0) {
                 Hero.decreaseEpsilon(1.5);
                 Villian.decreaseEpsilon(1.5);
                 Hero.decreaseBPP();

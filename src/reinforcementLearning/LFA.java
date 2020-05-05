@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 
 public class LFA implements Function {
 
-	private int[] featureVectorLengths = {8,90,115,116};
+	private int[] featureVectorLengths = {8,106,121,123};
 	
 	private double[] weightsPreIP;
 	private double[] weightsPreOP;
