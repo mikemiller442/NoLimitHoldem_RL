@@ -189,7 +189,7 @@ public class Machine extends Player {
 		double[] previousFeatures = fun.getCurrentFeatures().clone();
 //		for (int i = 0; i < previousFeatures.length; i++) previousFeatures[i] = currentFeatures[i];
 		fun.setPreviousFeatures(previousFeatures);
-		System.out.println(immediateReward);
+//		System.out.println(immediateReward);
 		System.out.println("Machine bets " + Integer.toString(bet));
 		return bet;
 	}

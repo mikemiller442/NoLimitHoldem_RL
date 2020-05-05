@@ -400,10 +400,12 @@ public class Game {
 		if (playerFolded == 1) {
 			smallBlind.winsPot(0, true, finalPotWithoutLastBet);
 			bigBlind.winsPot(pot, true, finalPotWithoutLastBet);
+			System.out.println(smallBlind.getName() + " folds and shows " + smallBlind.returnHandString());
 			System.out.println(bigBlind.getName() + " wins the pot of $" + Integer.toString(pot));
 		} else {
 			smallBlind.winsPot(pot, true, finalPotWithoutLastBet);
 			bigBlind.winsPot(0, true, finalPotWithoutLastBet);
+			System.out.println(bigBlind.getName() + " folds and shows " + bigBlind.returnHandString());
 			System.out.println(smallBlind.getName() + " wins the pot of $" + Integer.toString(pot));
 		}
 	}

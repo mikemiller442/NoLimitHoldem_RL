@@ -126,6 +126,10 @@ public abstract class Player {
 		System.out.println(this.getName() + " in the " + position + " with " + card1.toString() + " " + card2.toString());
 	}
 	
+	public String returnHandString() {
+      return card1.toString() + " " + card2.toString();
+    }
+	
 	public abstract void endHandWeightsUpdate(double reward);
 	
 	public abstract int makeDecision(int needToCall, int pot);
