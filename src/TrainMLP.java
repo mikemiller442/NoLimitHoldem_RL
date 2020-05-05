@@ -11,7 +11,7 @@ public class TrainMLP {
         
         int turn = 1; // start at one so BPP doesn't go to zero
         
-        while (turn < 2000000) {
+        while (turn < 9600000) {
             game.Hand();
             game.switchBlinds();
             System.out.println("num chips gained");
@@ -20,7 +20,7 @@ public class TrainMLP {
             if (Hero.numChipsGained + Villian.numChipsGained != 0) {
                 break;
             }
-            if (turn % 200000 == 0) {
+            if (turn % 800000 == 0) {
                 Hero.decreaseEpsilon(1.5);
                 Villian.decreaseEpsilon(1.5);
                 Hero.decreaseBPP();

@@ -15,7 +15,7 @@ import java.util.Random;
 public class Machine extends Player {
 	
 	private Function fun;
-	private int[] featureVectorLengths = {8,106,121,123};
+	private int[] featureVectorLengths = {8,112,128,129};
 	private double[] moves = {0,0,-1,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToOpen = {0,0.33,0.5,0.75,1,1.5,3};
 	private double[] movesToComplete = {0,-1,0.33,0.5,0.75,1,1.5,3};
@@ -64,7 +64,6 @@ public class Machine extends Player {
 	}
 	
 	public int makeDecision(int needToCall, int pot) {
-		double[] features;
 		double[] actions = new double[9];
 		double max = Integer.MIN_VALUE;
 		int maxIndex = 0;
@@ -427,6 +426,13 @@ public class Machine extends Player {
         features[103] = possibleHands[4]*bdsd;
         features[104] = possibleHands[5]*bdsd;
         features[105] = possibleHands[6]*bdsd;
+        
+        features[106] = Math.abs(board[0].getValue() - board[1].getValue());
+        features[107] = Math.abs(board[1].getValue() - board[2].getValue());
+        features[108] = card1.getValue()*bdsd;
+        features[109] = card2.getValue()*bdsd;
+        features[110] = card1.getValue()*suitedCards;
+        features[111] = card2.getValue()*suitedCards;
 		
 		return features;
 	}
@@ -598,6 +604,14 @@ public class Machine extends Player {
         features[118] = board[1].getValue();
         features[119] = board[2].getValue();
         features[120] = board[3].getValue();
+        
+        features[121] = Math.abs(board[0].getValue() - board[1].getValue());
+        features[122] = Math.abs(board[1].getValue() - board[2].getValue());
+        features[123] = Math.abs(board[2].getValue() - board[3].getValue());
+        features[124] = card1.getValue()*openEnders;
+        features[125] = card2.getValue()*openEnders;
+        features[126] = card1.getValue()*suitedCards;
+        features[127] = card2.getValue()*suitedCards;
 		
 		return features;
 	}
@@ -607,6 +621,7 @@ public class Machine extends Player {
 		double handStrength = this.calculateHandStrength();
 		int[] hand = bestHand(7, true);
 		int[] possibleHands = new int[8]; // from pair to quads, excluding high card and straight flush
+		int flushBlocker = this.FlushBlocker();
 		for (int i = 0; i < possibleHands.length; i++) possibleHands[i] = 0;
 		if (hand[0] > 0) {
 			possibleHands[hand[0] - 1] = 1; // you had the hand indicated by the bestHand method
@@ -769,6 +784,13 @@ public class Machine extends Player {
         features[120] = board[2].getValue();
         features[121] = board[3].getValue();
         features[122] = board[4].getValue();
+        
+        features[123] = Math.abs(board[0].getValue() - board[1].getValue());
+        features[124] = Math.abs(board[1].getValue() - board[2].getValue());
+        features[125] = Math.abs(board[2].getValue() - board[3].getValue());
+        features[126] = Math.abs(board[3].getValue() - board[4].getValue());
+        features[127] = card1.getValue()*flushBlocker;
+        features[128] = card2.getValue()*flushBlocker;
 		
 //		features[78] = sb_sizings[0]*actionJustCommitted;
 //		features[79] = sb_sizings[1]*actionJustCommitted;
@@ -922,6 +944,27 @@ public class Machine extends Player {
         }
       }
       return backDoorStraightDraw;
+    }
+	
+	private int FlushBlocker() {
+	  int flushBlocker = 0;
+      int suitCounter;
+      for (int i = 0; i < 4; i++) {
+        suitCounter = 0;
+        for (int j = 0; j < board.length; j++) {
+            if (board[j].getSuit() == i) {
+                suitCounter++;
+            }
+        }
+        if (suitCounter >= 3) {
+            if (card1.getSuit() == i) {
+              flushBlocker = card1.getValue();
+            } else if (card2.getSuit() == i) {
+              flushBlocker = card2.getValue();
+            }
+        }
+    }
+      return flushBlocker;
     }
 	
 	public static void main(String args[]) {

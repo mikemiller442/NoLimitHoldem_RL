@@ -10,17 +10,17 @@ import java.util.Random;
 
 public class MLP implements Function {
 
-	private int[] featureVectorLengths = {8,106,121,123};
+	private int[] featureVectorLengths = {8,112,128,129};
 	private final int NUM_WEIGHT_MATRICES = 3;
 	
 	private int[] numNodesPreIP = {8,5,3};
 	private int[] numNodesPreOP = {8,5,3};
-	private int[] numNodesFlopIP = {106,50,20};
-	private int[] numNodesFlopOP = {106,50,20};
-	private int[] numNodesTurnIP = {121,50,20};
-	private int[] numNodesTurnOP = {121,50,20};
-	private int[] numNodesRiverIP = {123,50,20};
-	private int[] numNodesRiverOP = {123,50,20};
+	private int[] numNodesFlopIP = {112,70,30};
+	private int[] numNodesFlopOP = {112,70,30};
+	private int[] numNodesTurnIP = {128,70,30};
+	private int[] numNodesTurnOP = {128,70,30};
+	private int[] numNodesRiverIP = {129,70,30};
+	private int[] numNodesRiverOP = {129,70,30};
 	
 	private double[][] NodesPreIP;
 	private double[][] NodesPreOP;
