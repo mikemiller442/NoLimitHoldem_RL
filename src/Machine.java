@@ -905,18 +905,17 @@ public class Machine extends Player {
 	}
 	
 	private int BackDoorStraightDraw() {
-      Card[] cardArray = new Card[3];
       int backDoorStraightDraw = 0;
       if (Math.abs(card1.getValue() - card2.getValue()) == 2) {
         int gutterBall = Math.max(card1.getValue(), card2.getValue()) - 1;
-          for (int i = 0; i < board.length; i++) {
-            if (board[i].getValue() == gutterBall) {
-              backDoorStraightDraw = 1;
-            }
+        for (int i = 0; i < 3; i++) {
+          if (board[i].getValue() == gutterBall) {
+            backDoorStraightDraw = 1;
           }
+        }
       } else if (Math.abs(card1.getValue() - card2.getValue()) == 1) {
         int highCard = Math.max(card1.getValue(), card2.getValue());
-        for (int i = 0; i < board.length; i++) {
+        for (int i = 0; i < 3; i++) {
           if (board[i].getValue() == highCard+2 || board[i].getValue() == highCard+1 || board[i].getValue() == highCard-2 || board[i].getValue() == highCard-3) {
             backDoorStraightDraw = 1;
           }
